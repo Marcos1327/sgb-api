@@ -1,5 +1,6 @@
 package com.marcos.sigeb.configuration.exceptions;
 
+import com.marcos.sigeb.handlers.BusinessException;
 import com.marcos.sigeb.handlers.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,19 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         body.setDescription(resourceNotFoundException.getMessage());
 
         return handleExceptionInternal(resourceNotFoundException, body, headers, status, request);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Object> handleBusinessException(BusinessException businessException, WebRequest request) {
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        var status = HttpStatus.BAD_REQUEST;
+        var body = new ResponseError();
+
+        body.setCode(status.value());
+        body.setDescription(businessException.getMessage());
+
+        return handleExceptionInternal(businessException, body, headers, status, request);
     }
 }
