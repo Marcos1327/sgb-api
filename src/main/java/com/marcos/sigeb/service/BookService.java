@@ -74,6 +74,24 @@ public class BookService {
         return book.getNumeroExemplaresDisponiveis() > 0;
     }
 
+    public void diminuirNumeroExemplaresDisponiveis(Long id) {
+        Book book = findById(id);
+        book.setNumeroExemplaresDisponiveis(book.getNumeroExemplaresDisponiveis() - 1);
+        if (book.getNumeroExemplaresDisponiveis() == 0) {
+            book.setAvailableBook(false);
+        }
+        bookRepository.save(book);
+    }
+
+    public void aumentarNumeroExemplaresDisponiveis(Long id) {
+        Book book = findById(id);
+        book.setNumeroExemplaresDisponiveis(book.getNumeroExemplaresDisponiveis() + 1);
+        if (book.getNumeroExemplaresDisponiveis() > 0) {
+            book.setAvailableBook(true);
+        }
+        bookRepository.save(book);
+    }
+
     public Book findBookById(Long id) {
         return findById(id);
     }
@@ -85,5 +103,4 @@ public class BookService {
     private Book findById(Long id) {
         return bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado" + id));
     }
-
 }

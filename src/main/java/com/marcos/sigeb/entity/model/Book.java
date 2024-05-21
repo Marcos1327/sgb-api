@@ -1,8 +1,10 @@
 package com.marcos.sigeb.entity.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -17,6 +19,10 @@ public class Book {
     private String editora;
     private LocalDate anoPublicacao;
     private Integer numeroExemplaresDisponiveis;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Emprestimo> emprestimo;
 
     private boolean availableBook;
     public Book() {

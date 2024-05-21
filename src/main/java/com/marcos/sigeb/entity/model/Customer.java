@@ -30,18 +30,25 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Address> endereços;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Emprestimo> emprestimos;
+
+
     private String numeroContato;
     private LocalDate dataCadastro;
 
     public Customer() {
     }
 
-    public Customer(Long customerId, String nome, String sobrenome, String idade, List<Address> endereços, String numeroContato, LocalDate dataCadastro) {
+    public Customer(Long customerId, String nome, String sobrenome, String idade, List<Address> endereços, List<Emprestimo> emprestimos, String numeroContato, LocalDate dataCadastro) {
         this.customerId = customerId;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.idade = idade;
         this.endereços = endereços;
+        this.emprestimos = emprestimos;
         this.numeroContato = numeroContato;
         this.dataCadastro = dataCadastro;
     }
@@ -82,8 +89,16 @@ public class Customer {
         return endereços;
     }
 
-    public void setEndereço(List<Address> endereços) {
+    public void setEndereços(List<Address> endereços) {
         this.endereços = endereços;
+    }
+
+    public List<Emprestimo> getEmprestimos() {
+        return emprestimos;
+    }
+
+    public void setEmprestimos(List<Emprestimo> emprestimos) {
+        this.emprestimos = emprestimos;
     }
 
     public String getNumeroContato() {
@@ -100,17 +115,5 @@ public class Customer {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + customerId +
-                ", nome='" + nome + '\'' +
-                ", sobrenome='" + sobrenome + '\'' +
-                ", idade='" + idade + '\'' +
-                ", endereço='" + endereços + '\'' +
-                ", numeroContato='" + numeroContato + '\'' +
-                '}';
     }
 }

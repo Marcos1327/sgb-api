@@ -41,7 +41,7 @@ public class CustomerService {
             endereços.add(address);
         }
 
-        customer.setEndereço(endereços);
+        customer.setEndereços(endereços);
 
         return customerRepository.save(customer);
     }
