@@ -16,6 +16,17 @@ public class Customer {
     private String nome;
     private String sobrenome;
     private String idade;
+
+    /**
+     * Para nao esquecer
+     *
+     * cascade = CascadeType.ALL: Esta propriedade indica que todas as operações de persistência (como persistir, mesclar, remover, atualizar, etc.)
+     * realizadas no cliente também devem ser aplicadas aos endereços associados. Isso significa que se você deletar um cliente,
+     * o JPA também tentará deletar todos os endereços associados a esse cliente.
+     *
+     * orphanRemoval = true: Esta propriedade indica que se um endereço associado for removido da lista de endereços do cliente, ele deve ser deletado do banco de dados.
+     * Em outras palavras, se a referência do cliente ao endereço for removida, o endereço será considerado órfão e será removido do banco de dados.
+     * */
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Address> endereços;

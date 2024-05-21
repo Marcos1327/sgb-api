@@ -6,7 +6,4 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface AddressRepository extends JpaRepository<Address, Long> {
-    @Modifying
-    @Query("DELETE FROM Address a WHERE a.customer.id = :customerId")
-    void deleteAddressByCustomerId(Long customerId);
 }

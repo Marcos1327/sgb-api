@@ -21,8 +21,4 @@ public class AddressService {
 
         return addressRepository.save(address);
     }
-
-    public void deleteAddressByCustomerId(Long id) {
-//        addressRepository.deleteByCustomerId(id);
-    }
 }

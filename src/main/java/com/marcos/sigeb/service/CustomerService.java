@@ -4,6 +4,7 @@ import com.marcos.sigeb.entity.dto.AddressDTO;
 import com.marcos.sigeb.entity.dto.CustomerDTO;
 import com.marcos.sigeb.entity.model.Address;
 import com.marcos.sigeb.entity.model.Customer;
+import com.marcos.sigeb.handlers.ResourceNotFoundException;
 import com.marcos.sigeb.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,10 +47,15 @@ public class CustomerService {
     }
 
     public Customer getCustomer(Long id) {
-        return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+        return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found for id: " + id));
     }
 
     public void deleteCustomer(Long id) {
+
+        if (!customerRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Customer not found for id: " + id);
+        }
+
         customerRepository.deleteById(id);
     }
 }
